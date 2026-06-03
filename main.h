@@ -1,6 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
-char** read_file(char* filepath, size_t lines);
-char** encode_text(char** text, size_t lines);
+enum types {
+    TXT, IMG, AUD, VID
+};
+
+struct data {
+    bool conv;
+    enum types type;
+    size_t size;
+    char** data;
+};
+
+struct data* encode(struct data* raw);

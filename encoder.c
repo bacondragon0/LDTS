@@ -51,7 +51,6 @@ char* parser(char* text) {
     return bin;
 }
 
-
 char** encode_text(char** text, size_t lines) {
 
     char** bin_arr = malloc(sizeof(char*) * lines);
@@ -62,4 +61,22 @@ char** encode_text(char** text, size_t lines) {
     }
 
     return bin_arr;
+}
+
+struct data* encode(struct data* raw) {
+    if (raw->conv == true) {
+        printf("Data already encoded.\n");
+        return NULL;
+    }
+
+    char** res_bin = encode_text(raw->data,raw->size);
+
+    struct data* res = malloc(sizeof(struct data));
+
+    res->conv = true;
+    res->type = raw->type;
+    res->size = raw->size;
+    res->data = res_bin;
+
+    return res;
 }

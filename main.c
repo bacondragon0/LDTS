@@ -13,7 +13,10 @@ size_t count_lines(char *filepath) {
     return i;
 }
 
-char** read_file(char *filepath, size_t lines) {
+struct data* read_file(char *filepath) {
+
+    size_t lines = count_lines(filepath);
+
     FILE* file = fopen(filepath, "r");
     if (!file) { return NULL; }
 
@@ -32,7 +35,14 @@ char** read_file(char *filepath, size_t lines) {
     
     fclose(file);
     free(line);
-    return text_arr;
+
+    struct data* out = malloc(sizeof(struct data));
+    out->conv = false;
+    out->type = TXT;
+    out->size = lines;
+    out->data = text_arr;
+
+    return out;
 }
 
 void write_file(char *filepath, char** text, size_t lines) {
@@ -45,33 +55,38 @@ void write_file(char *filepath, char** text, size_t lines) {
     fclose(file);
 }
 
-void free_text(char** text, size_t lines) {
-    for (size_t i = 0; i < lines; i++) {
-        free(text[i]);
+void free_data(struct data* content) {
+    for (size_t i = 0; i < content->size; i++) {
+        if (content->data[i]) { free(content->data[i]); }
     }
-    free(text);
+    free(content);
 }
 
-void print_text(char** text, size_t lines) {
-    for (size_t i = 0; i < lines; i++) {
-        printf("%s\n",text[i]);
+void print_data(struct data* content) {
+    printf("Converted : %i\n",content->conv);
+    printf("Lines : %i\n",content->size);
+    printf("Data :\n");
+    for (size_t i = 0; i < content->size; i++) {
+        printf("%s",content->data[i]);
     }
+    printf("\n");
 }
 
 int main() {
 
     char* input = "input/test.txt";
     char* output = "output/test.txt";
-    size_t lines = count_lines(input);
+
+    struct data* f1 = read_file(input);
     
-    char** text = read_file(input,lines);
-    char** encoded = encode_text(text,lines);
+    struct data* encoded = encode(f1);
     //print_text(text,lines);
-    printf("Encoded main\n");
-    print_text(encoded,lines);
-    write_file(output,encoded,lines);
-    free_text(text,lines);
-    free_text(encoded,lines);
+    //printf("Encoded main\n");
+    print_data(f1);
+    print_data(encoded);
+    //write_file(output,encoded,lines);
+    free_data(f1);
+    free_data(encoded);
 
     return 0;
 }
