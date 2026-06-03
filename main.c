@@ -35,6 +35,16 @@ char** read_file(char *filepath, size_t lines) {
     return text_arr;
 }
 
+void write_file(char *filepath, char** text, size_t lines) {
+    FILE* file = fopen(filepath, "w");
+    if (!file) { return; }
+
+    for (size_t i = 0; i < lines; i++) {
+        fprintf(file,text[i]);
+    }
+    fclose(file);
+}
+
 void free_text(char** text, size_t lines) {
     for (size_t i = 0; i < lines; i++) {
         free(text[i]);
@@ -44,19 +54,24 @@ void free_text(char** text, size_t lines) {
 
 void print_text(char** text, size_t lines) {
     for (size_t i = 0; i < lines; i++) {
-        printf("%s",text[i]);
+        printf("%s\n",text[i]);
     }
 }
 
 int main() {
 
-    char* filepath = "input/test.txt";
-    size_t lines = count_lines(filepath);
+    char* input = "input/test.txt";
+    char* output = "output/test.txt";
+    size_t lines = count_lines(input);
     
-    char** text = read_file(filepath,lines);
-    if (text == NULL) { return -2; }
-    print_text(text,lines);
+    char** text = read_file(input,lines);
+    char** encoded = encode_text(text,lines);
+    //print_text(text,lines);
+    printf("Encoded main\n");
+    print_text(encoded,lines);
+    write_file(output,encoded,lines);
     free_text(text,lines);
+    free_text(encoded,lines);
 
     return 0;
 }
