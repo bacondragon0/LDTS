@@ -1,53 +1,46 @@
 #include "main.h"
 
-void reverse(char *bin, int left, int right) {
-    while (left < right) {
-        char temp = bin[left];
-        bin[left] = bin[right];
-        bin[right] = temp;
-        left++;
-        right--;
-    }
-}
-
 char* to_binary(int c) {
-    char* out = calloc(6, sizeof(char));
-    int res;
-    int i = 0;
+    char* out = malloc(7 * sizeof(char));
+    int exp = 5;
 
-    while (c > 0) {
-        int bit = c % 2;
-        out[i++] = '0' + bit;
-        c /= 2;
+    while(exp >= 0) {
+        if (c >= pow(2,exp)) {
+            c = c - pow(2,exp);
+            out[5 - exp] = '1'; 
+        }
+        else {
+            out[5 - exp] = '0';
+        }
+        exp--;
     }
-    out[i] = '\0';
-
-    reverse(out, 0, i-1);
-  	return out;
+    out[6] = '\0';
+    return out;
 }
 
 char* parser(char* text) {
-
-    char* bin = calloc(strlen(text) * 6, sizeof(char));
+    printf("strlen : %i\n",strlen(text));
+    char* bin = calloc(((strlen(text) + 2) * 6), sizeof(char));
     
     size_t i = 0;
     while (i < strlen(text)) {
         char c = text[i];
-
-        if ('a' <= c <= 'z' || 'A' <= c <= 'Z') {
-            char* b = to_binary((int)c % 26);
-            strcat(bin,b);
-            free(b);
-        }
-        else if (c == ' ') {
+        if (c == ' ') {
             char* b = "111111";
+            printf("%s\n",b);
+            strcat(bin,b);
+        }
+        else if ('a' <= c <= 'z') {
+            char* b = to_binary((int)c - 96);
+            printf("%s\n",b);
             strcat(bin,b);
             free(b);
         }
         i++;
     }
+    printf("bin str: %s\n",bin);
     strcat(bin,"000000");
-    
+    printf("bin str post: %s\n",bin);
     return bin;
 }
 
@@ -57,13 +50,14 @@ char** encode_text(char** text, size_t lines) {
 
     for (size_t i = 0; i < lines; i++) {
         bin_arr[i] = parser(text[i]);
-        //printf("%s\n",bin_arr[i]);
+        printf("%s\n",bin_arr[i]);
     }
 
     return bin_arr;
 }
 
 struct data* encode(struct data* raw) {
+    if (raw->size == 0) { printf("No data to encode.\n"); return NULL; }
     if (raw->conv == true) {
         printf("Data already encoded.\n");
         return NULL;

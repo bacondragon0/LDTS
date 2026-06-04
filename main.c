@@ -45,12 +45,12 @@ struct data* read_file(char *filepath) {
     return out;
 }
 
-void write_file(char *filepath, char** text, size_t lines) {
+void write_file(char *filepath, struct data* content) {
     FILE* file = fopen(filepath, "w");
     if (!file) { return; }
 
-    for (size_t i = 0; i < lines; i++) {
-        fprintf(file,text[i]);
+    for (size_t i = 0; i < content->size; i++) {
+        fprintf(file,content->data[i]);
     }
     fclose(file);
 }
@@ -59,17 +59,22 @@ void free_data(struct data* content) {
     for (size_t i = 0; i < content->size; i++) {
         if (content->data[i]) { free(content->data[i]); }
     }
+    free(content->data);
     free(content);
 }
 
 void print_data(struct data* content) {
-    printf("Converted : %i\n",content->conv);
-    printf("Lines : %i\n",content->size);
-    printf("Data :\n");
+
+    static const char *type_string[] = {"Text", "Image", "Audio", "Video"};
+    printf("\n----START----\n");
+    if (content->conv) { printf("Converted: %i\n",content->conv); }
+    if (content->type) { printf("Type: %s\n",type_string[content->type]); }
+    if (content->size) { printf("Lines: %i\n",content->size);} 
+    printf("Data:\n");
     for (size_t i = 0; i < content->size; i++) {
-        printf("%s",content->data[i]);
+        if (content->data[i]) { printf("%s",content->data[i]); }
     }
-    printf("\n");
+    printf("\n----END----\n");
 }
 
 int main() {
@@ -80,13 +85,15 @@ int main() {
     struct data* f1 = read_file(input);
     
     struct data* encoded = encode(f1);
-    //print_text(text,lines);
     //printf("Encoded main\n");
     print_data(f1);
     print_data(encoded);
-    //write_file(output,encoded,lines);
+    struct data* decoded = decode(encoded);
+    print_data(decoded);
+    //write_file(output,encoded);
     free_data(f1);
     free_data(encoded);
+    free_data(decoded);
 
     return 0;
 }
