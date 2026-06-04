@@ -67,9 +67,9 @@ void print_data(struct data* content) {
 
     static const char *type_string[] = {"Text", "Image", "Audio", "Video"};
     printf("\n----START----\n");
-    if (content->conv) { printf("Converted: %i\n",content->conv); }
-    if (content->type) { printf("Type: %s\n",type_string[content->type]); }
-    if (content->size) { printf("Lines: %i\n",content->size);} 
+    printf("Converted: %i\n",content->conv);
+    printf("Type: %s\n",type_string[content->type]);
+    printf("Lines: %i\n",content->size); 
     printf("Data:\n");
     for (size_t i = 0; i < content->size; i++) {
         if (content->data[i]) { printf("%s",content->data[i]); }

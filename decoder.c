@@ -10,7 +10,7 @@ int to_int(char* binary) {
             res = res + pow(2,5 - i);
         }
     }
-    printf("res %i\n",res);
+    //printf("res %i\n",res);
     return res;
 }
 
@@ -18,7 +18,7 @@ int to_int(char* binary) {
 char reader(char* binary) {
 
     int ascii = to_int(binary);
-    printf("before conv: %i\n",ascii);
+    //printf("before conv: %i\n",ascii);
     if (ascii == 0) { return (char)10; }
     if (ascii == 64) { return ' '; }
     if (1 <= ascii <= 26) { ascii = ascii + 96; printf("\n ascii = %i\n",ascii); }
@@ -30,13 +30,13 @@ char reader(char* binary) {
 
 char* get_str(char* binary, size_t index) {
     char* out = malloc(sizeof(char) * 6 + 1);
-    printf("binary string: %s\n",binary);
+    //printf("binary string: %s\n",binary);
     for (size_t i = 0; i < 6; i++) {
         out[i] = binary[(index * 6) + i];
     }
 
     out[6] = '\0';
-    printf("%s\n",out);
+    //printf("%s\n",out);
     return out;
 }
 
@@ -51,7 +51,7 @@ char** decode_text(char** text, size_t lines) {
             llen++;
             str = get_str(text[i],llen);
         }
-        printf("llen : %i\n",llen);
+        //printf("llen : %i\n",llen);
         
         char* line = calloc(llen + 2, sizeof(char));
         

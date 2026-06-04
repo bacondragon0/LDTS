@@ -19,7 +19,7 @@ char* to_binary(int c) {
 }
 
 char* parser(char* text) {
-    printf("strlen : %i\n",strlen(text));
+    //printf("strlen : %i\n",strlen(text));
     char* bin = calloc(((strlen(text) + 2) * 6), sizeof(char));
     
     size_t i = 0;
@@ -27,20 +27,20 @@ char* parser(char* text) {
         char c = text[i];
         if (c == ' ') {
             char* b = "111111";
-            printf("%s\n",b);
+            //printf("%s\n",b);
             strcat(bin,b);
         }
         else if ('a' <= c <= 'z') {
             char* b = to_binary((int)c - 96);
-            printf("%s\n",b);
+            //printf("%s\n",b);
             strcat(bin,b);
             free(b);
         }
         i++;
     }
-    printf("bin str: %s\n",bin);
+    //printf("bin str: %s\n",bin);
     strcat(bin,"000000");
-    printf("bin str post: %s\n",bin);
+    //printf("bin str post: %s\n",bin);
     return bin;
 }
 
@@ -50,7 +50,7 @@ char** encode_text(char** text, size_t lines) {
 
     for (size_t i = 0; i < lines; i++) {
         bin_arr[i] = parser(text[i]);
-        printf("%s\n",bin_arr[i]);
+        //printf("%s\n",bin_arr[i]);
     }
 
     return bin_arr;
