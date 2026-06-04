@@ -46,11 +46,16 @@ char** decode_text(char** text, size_t lines) {
 
     size_t llen = 0;
     char* str = get_str(text[llen],llen);
+    int cmp = strcmp("000000",str);
+    free(str);
     for (size_t i = 0; i < lines; i++) {
-        while (strcmp("000000",str) != 0) {
+        while (cmp != 0) {
             llen++;
             str = get_str(text[i],llen);
+            cmp = strcmp("000000",str);
+            free(str);
         }
+        
         //printf("llen : %i\n",llen);
         
         char* line = calloc(llen + 2, sizeof(char));
@@ -58,6 +63,7 @@ char** decode_text(char** text, size_t lines) {
         for (size_t k = 0; k < llen; k++) {
             char* ch = get_str(text[i],k);
             line[k] = reader(ch);
+            free(ch);
         }
 
         if (i < lines-1) { 
