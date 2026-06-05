@@ -2,7 +2,7 @@
 
 size_t count_lines(char *filepath) {
     FILE* file = fopen(filepath, "r");
-    char* line = malloc(sizeof(char) * 512);
+    char* line = NULL;
     size_t len;
     ssize_t read;
     size_t i = 0;
@@ -23,7 +23,7 @@ struct data* read_file(char *filepath) {
     FILE* file = fopen(filepath, "r");
     if (!file) { return NULL; }
 
-    char* line = malloc(sizeof(char) * 256);
+    char* line = NULL;
 
     char** text_arr = malloc(sizeof(char*) * lines);
     for (size_t l = 0; l < lines; l++) {
