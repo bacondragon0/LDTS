@@ -2,9 +2,12 @@
 
 size_t count_lines(char *filepath) {
     FILE* file = fopen(filepath, "r");
-    char* line = malloc(sizeof(char) * 256);
+    char* line = malloc(sizeof(char) * 512);
+    size_t len;
+    ssize_t read;
     size_t i = 0;
-    while (fgets(line, sizeof(line), file)) {
+    while ((read = getline(&line, &len, file)) != -1) {
+        //printf("LINE: %s\n", line);
         i++;
     }
 
@@ -28,7 +31,10 @@ struct data* read_file(char *filepath) {
     }
     size_t i = 0;
 
-    while (fgets(line, sizeof(line), file)) {
+    size_t len;
+    ssize_t read;
+    while ((read = getline(&line, &len, file)) != -1) {
+        //printf("Read line %s\n",line);
         strcpy(text_arr[i],line);
         i++;
     }

@@ -20,9 +20,10 @@ char reader(char* binary) {
     int ascii = to_int(binary);
     //printf("before conv: %i\n",ascii);
     if (ascii == 0) { return (char)10; }
-    if (ascii == 64) { return ' '; }
-    if (1 <= ascii <= 26) { ascii = ascii + 96; printf("\n ascii = %i\n",ascii); }
-
+    else if (ascii == 64) { return ' '; }
+    else if (1 <= ascii && ascii <= 26) { ascii = ascii + 96; }
+    else if (27 <= ascii && ascii <= 52) { ascii = ascii + 38; }
+    else if (53 <= ascii && ascii <= 63) { ascii = ascii - 5; }
 
 
     return (char)ascii;
@@ -32,11 +33,12 @@ char* get_str(char* binary, size_t index) {
     char* out = malloc(sizeof(char) * 6 + 1);
     //printf("binary string: %s\n",binary);
     for (size_t i = 0; i < 6; i++) {
+        //printf("index: %i | binary: %c\n",index,binary[(index * 6) + i]);
         out[i] = binary[(index * 6) + i];
     }
 
     out[6] = '\0';
-    //printf("%s\n",out);
+    //printf("out: %s\n",out);
     return out;
 }
 
@@ -45,14 +47,16 @@ char** decode_text(char** text, size_t lines) {
     char** str_arr = malloc(sizeof(char*) * lines);
 
     size_t llen = 0;
-    char* str = get_str(text[llen],llen);
-    int cmp = strcmp("000000",str);
-    free(str);
+    int cmp = 0;
     for (size_t i = 0; i < lines; i++) {
+        char* str = get_str(text[0],llen);
+        cmp = strcmp("000000",str);
+        free(str);
         while (cmp != 0) {
             llen++;
             str = get_str(text[i],llen);
             cmp = strcmp("000000",str);
+            //printf("CMP: %i\n",cmp);
             free(str);
         }
         
@@ -72,6 +76,7 @@ char** decode_text(char** text, size_t lines) {
         }
         else { line[llen] = '\0'; }
         str_arr[i] = line;
+        llen = 0;
     }
 
     return str_arr;

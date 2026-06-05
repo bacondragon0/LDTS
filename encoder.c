@@ -30,8 +30,20 @@ char* parser(char* text) {
             //printf("%s\n",b);
             strcat(bin,b);
         }
-        else if ('a' <= c <= 'z') {
+        else if ('A' <= c && c <= 'Z') {
+            char* b = to_binary((int)c - 38);
+            //printf("%s\n",b);
+            strcat(bin,b);
+            free(b);
+        }
+        else if ('a' <= c && c <= 'z') {
             char* b = to_binary((int)c - 96);
+            //printf("%s\n",b);
+            strcat(bin,b);
+            free(b);
+        }
+        else if ('0' <= c && c <= '9') {
+            char* b = to_binary((int)c + 5);
             //printf("%s\n",b);
             strcat(bin,b);
             free(b);
