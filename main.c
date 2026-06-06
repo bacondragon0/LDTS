@@ -98,7 +98,7 @@ int main() {
     //print_data(decoded);
     //write_file(output,encoded);
     free_data(f1);
-    //free_data(encoded);
+    free_data(encoded);
     //free_data(decoded);
 
     return 0;

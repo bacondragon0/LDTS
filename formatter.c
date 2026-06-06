@@ -5,15 +5,18 @@ void convert_to_format(struct data* raw) {
     
     for (size_t i = 0; i < raw->size; i++) {
         char* line = text[i];
-
+        
         size_t n = 0;
         size_t oglen = strlen(line);
+
         for (size_t c = 0; c < oglen; c++) {
-            if (line[c] == ' ' || line[c] == '.' || line[c] == ',' || line[c] == '?') { n++; }
+            for (size_t sp = 0; sp < special_chrs_num; sp++) { 
+                if (special_chrs[sp] == line[c]) { n++; } 
+            }
         }
         if (n == 0) { return; }
 
-        char* nline = malloc(2 + oglen * sizeof(char) + sizeof(char) * n);
+        char* nline = malloc(1 + oglen * sizeof(char) + sizeof(char) * n);
         
         size_t l = 0;
         for (size_t j = 0; j < oglen; j++) {

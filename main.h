@@ -8,6 +8,9 @@ enum types {
     TXT, IMG, AUD, VID
 };
 
+const static char special_chrs[] = {' ', ',', '.', '?', '!'};
+const static size_t special_chrs_num = sizeof(special_chrs) / sizeof(char);
+
 struct data {
     bool conv;
     enum types type;
