@@ -14,6 +14,7 @@ The second step is turning the alphabetical string into 1s and 0s.
 The chosen representation is 1 char = 6 bits, which means a total of 64 unique symbols can be stored.
 
 *Conversion Table :*
+
 End of Line  | 0         | 000000
 
 a <-> z      | 1 <-> 26  | 000001 <-> 011010
