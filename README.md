@@ -15,18 +15,26 @@ The chosen representation is 1 char = 6 bits, which means a total of 64 unique s
 
 *Conversion Table :*
 End of Line  | 0         | 000000
+
 a <-> z      | 1 <-> 26  | 000001 <-> 011010
+
 A <-> Z      | 27 <-> 52 | 011011 <-> 110100
+
 0 <-> 9      | 53 <-> 62 | 110101 <-> 111110
+
 Sp. char ($) | 63        | 111111
 
 Special char ($) rule :
 The next three bits after the special character are special and are read differently, as they define the replaced character.
 *Special Character Table:*
 $0 |  (Space)
+
 $1 | .
+
 $2 | ,
+
 $3 | ?
+
 $4 | !
 
 A total of 8 characters can be defined this way.
