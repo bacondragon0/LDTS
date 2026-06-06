@@ -20,15 +20,31 @@ char* to_binary(int c) {
 
 char* parser(char* text) {
     //printf("strlen : %i\n",strlen(text));
+    //printf("text: %s\n",text);
     char* bin = calloc(((strlen(text) + 2) * 6), sizeof(char));
-    
+    char* tmp;
+    size_t spn = 0;
+
     size_t i = 0;
     while (i < strlen(text)) {
         char c = text[i];
-        if (c == ' ') {
+        //printf("Char: %c\n",c);
+        
+        if (c == '$') {
             char* b = "111111";
             //printf("%s\n",b);
             strcat(bin,b);
+
+            tmp = realloc(bin,((strlen(text) + 2) * 6) + 3 * sizeof(char) + spn * sizeof(char) * 3);
+            bin = tmp;
+
+            if (text[i+1] == '0') { strcat(bin,"000"); }
+            else if (text[i+1] == '1') { strcat(bin,"001"); }
+            else if (text[i+1] == '2') { strcat(bin,"011"); }
+            else if (text[i+1] == '3') { strcat(bin,"010"); }
+            else if (text[i+1] == '4') { strcat(bin,"100"); }
+            i++;
+            spn++;
         }
         else if ('A' <= c && c <= 'Z') {
             char* b = to_binary((int)c - 38);

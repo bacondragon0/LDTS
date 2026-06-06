@@ -89,17 +89,17 @@ int main() {
     char* output = "output/test.txt";
 
     struct data* f1 = read_file(input);
-    
+    print_data(f1);
+    convert_to_format(f1);
     struct data* encoded = encode(f1);
-    //printf("Encoded main\n");
     print_data(f1);
     print_data(encoded);
-    struct data* decoded = decode(encoded);
-    print_data(decoded);
+    //struct data* decoded = decode(encoded);
+    //print_data(decoded);
     //write_file(output,encoded);
     free_data(f1);
-    free_data(encoded);
-    free_data(decoded);
+    //free_data(encoded);
+    //free_data(decoded);
 
     return 0;
 }

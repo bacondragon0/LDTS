@@ -3,7 +3,7 @@
 
 int to_int(char* binary) {
     if (strcmp(binary,"000000") == 0) { return 0; }
-    if (strcmp(binary,"111111") == 0) { return 64; }
+    if (strcmp(binary,"111111") == 0) { return 63; }
     int res = 0;
     for (int i = 5; i >= 0; i--) {
         if (binary[i] == '1') {
@@ -14,16 +14,15 @@ int to_int(char* binary) {
     return res;
 }
 
-
 char reader(char* binary) {
 
     int ascii = to_int(binary);
     //printf("before conv: %i\n",ascii);
     if (ascii == 0) { return (char)10; }
-    else if (ascii == 64) { return ' '; }
+    else if (ascii == 63) { return ' '; }
     else if (1 <= ascii && ascii <= 26) { ascii = ascii + 96; }
     else if (27 <= ascii && ascii <= 52) { ascii = ascii + 38; }
-    else if (53 <= ascii && ascii <= 63) { ascii = ascii - 5; }
+    else if (53 <= ascii && ascii <= 62) { ascii = ascii - 5; }
 
 
     return (char)ascii;
