@@ -94,12 +94,12 @@ int main() {
     struct data* encoded = encode(f1);
     print_data(f1);
     print_data(encoded);
-    //struct data* decoded = decode(encoded);
-    //print_data(decoded);
+    struct data* decoded = decode(encoded);
+    print_data(decoded);
     //write_file(output,encoded);
     free_data(f1);
     free_data(encoded);
-    //free_data(decoded);
+    free_data(decoded);
 
     return 0;
 }

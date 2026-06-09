@@ -38,11 +38,11 @@ char* parser(char* text) {
             tmp = realloc(bin,((strlen(text) + 2) * 6) + 3 * sizeof(char) + spn * sizeof(char) * 3);
             bin = tmp;
 
-            if (text[i+1] == '0') { strcat(bin,"000"); }
-            else if (text[i+1] == '1') { strcat(bin,"001"); }
+            if (text[i+1] == '0') { strcat(bin,"001"); }
+            else if (text[i+1] == '1') { strcat(bin,"010"); }
             else if (text[i+1] == '2') { strcat(bin,"011"); }
-            else if (text[i+1] == '3') { strcat(bin,"010"); }
-            else if (text[i+1] == '4') { strcat(bin,"100"); }
+            else if (text[i+1] == '3') { strcat(bin,"100"); }
+            else if (text[i+1] == '4') { strcat(bin,"101"); }
             i++;
             spn++;
         }
