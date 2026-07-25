@@ -21,3 +21,4 @@ struct data {
 struct data* encode(struct data* raw);
 struct data* decode(struct data* content);
 void convert_to_format(struct data* raw);
+void convert_from_format(struct data* format);

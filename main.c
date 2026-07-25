@@ -96,7 +96,9 @@ int main() {
     print_data(encoded);
     struct data* decoded = decode(encoded);
     print_data(decoded);
+    convert_from_format(decoded);
     //write_file(output,encoded);
+    print_data(decoded);
     free_data(f1);
     free_data(encoded);
     free_data(decoded);
