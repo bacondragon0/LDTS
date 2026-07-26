@@ -14,7 +14,7 @@ void convert_to_format(struct data* raw) {
                 if (special_chrs[sp] == line[c]) { n++; } 
             }
         }
-        if (n == 0) { return; }
+        if (n == 0) { continue; }
 
         char* nline = malloc(1 + oglen * sizeof(char) + sizeof(char) * n);
         
@@ -71,9 +71,9 @@ void convert_from_format(struct data* format) {
             if (line[c] == '$') { n++; }
         }
         printf("n = %i\n",n);
-        if (n == 0) { return; }
+        if (n == 0) { continue; }
         printf("n non zero\n");
-        char* nline = malloc((1024 + oglen - n) * sizeof(char));
+        char* nline = malloc((1 + oglen - n) * sizeof(char));
         
         size_t l = 0;
         for (size_t j = 0; j < 1+oglen-n; j++) {
@@ -100,6 +100,7 @@ void convert_from_format(struct data* format) {
             }
             l++;
         }
+        if (i < format->size-1) { nline[l] = '\n'; l++; }
         nline[l] = '\0';
 
         //printf("nline: %s\n",nline);
